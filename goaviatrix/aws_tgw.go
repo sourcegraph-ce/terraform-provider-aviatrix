@@ -1,6 +1,7 @@
 package goaviatrix
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -482,7 +483,16 @@ func (c *Client) DetachVpcFromAWSTgw(awsTgw *AWSTgw, vpcID string) error {
 	}
 
 	var data APIResp
-	if err = json.NewDecoder(resp.Body).Decode(&data); err != nil {
+
+	buf := new(bytes.Buffer)
+	buf.ReadFrom(resp.Body)
+	bodyString := buf.String()
+
+	bodyIoCopy := strings.NewReader(bodyString)
+
+	log.Printf("resp.Body is %v", bodyString)
+
+	if err = json.NewDecoder(bodyIoCopy).Decode(&data); err != nil {
 		return errors.New("Json Decode detach_vpc_from_tgw failed: " + err.Error())
 	}
 	if !data.Return {
