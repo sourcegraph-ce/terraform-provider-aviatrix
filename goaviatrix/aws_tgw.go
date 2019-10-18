@@ -493,7 +493,7 @@ func (c *Client) DetachVpcFromAWSTgw(awsTgw *AWSTgw, vpcID string) error {
 	log.Printf("resp.Body is %v", bodyString)
 
 	if err = json.NewDecoder(bodyIoCopy).Decode(&data); err != nil {
-		return errors.New("Json Decode detach_vpc_from_tgw failed: " + err.Error())
+		return errors.New("Json Decode detach_vpc_from_tgw failed: " + err.Error() + "\n Body: " + bodyString)
 	}
 	if !data.Return {
 		return errors.New("Rest API detach_vpc_from_tgw Get failed: " + data.Reason)
