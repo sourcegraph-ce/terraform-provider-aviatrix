@@ -2,7 +2,7 @@ package aviatrix
 
 import (
 	"crypto/tls"
-	"log"
+	log "github.com/sourcegraph-ce/logrus"
 	"net/http"
 
 	"github.com/terraform-providers/terraform-provider-aviatrix/goaviatrix"
